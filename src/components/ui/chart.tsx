@@ -367,4 +367,6 @@ export const Chart = {
   Legend: ChartLegend,
   LegendContent: ChartLegendContent,
   Style: ChartStyle,
-}
+  XAxis: ChartXAxis,
+  YAxis: ChartYAxis,
+};

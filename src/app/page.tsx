@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Chart, ChartLine, ChartXAxis, ChartYAxis, ChartGrid, } from "@/components/ui/chart";
-import type { ChartTooltipContent } from "@/components/ui/chart";
+import { Chart, ChartLine, ChartXAxis, ChartYAxis, ChartGrid } from "@/components/ui/chart";
 import {
   Table,
   TableBody,
@@ -118,7 +117,7 @@ export default function Home() {
             />
             <ChartXAxis dataKey="month" />
             <ChartYAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
-            <Chart.TooltipContent />
+            <Chart.Tooltip />
             <ChartGrid strokeDasharray="3 3" />
           </Chart.Container>
         </CardContent>
