@@ -3,7 +3,6 @@
 import {useEffect, useState} from "react";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {ChartLine, ChartXAxis, ChartYAxis, ChartGrid, Chart} from "@/components/ui/chart";
 import {
   Table,
   TableBody,
