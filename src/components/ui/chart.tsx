@@ -38,9 +38,7 @@ const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     config: ChartConfig
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >["children"]
+    children: React.ReactNode;
   }
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()
@@ -58,14 +56,16 @@ const ChartContainer = React.forwardRef<
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
-          {children}
+        <RechartsPrimitive.ResponsiveContainer width="100%" height="100%">
+          <RechartsPrimitive.ComposedChart>
+            {children}
+          </RechartsPrimitive.ComposedChart>
         </RechartsPrimitive.ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   )
 })
-ChartContainer.displayName = "Chart"
+ChartContainer.displayName = "ChartContainer"
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
@@ -254,7 +254,7 @@ const ChartTooltipContent = React.forwardRef<
     )
   }
 )
-ChartTooltipContent.displayName = "ChartTooltip"
+ChartTooltipContent.displayName = "ChartTooltipContent"
 
 const ChartLegend = RechartsPrimitive.Legend
 
@@ -355,20 +355,16 @@ function getPayloadConfigFromPayload(
     : config[key as keyof typeof config]
 }
 
-const ChartLine = RechartsPrimitive.Line;
-const ChartGrid = RechartsPrimitive.CartesianGrid;
-const ChartXAxis = RechartsPrimitive.XAxis;
-const ChartYAxis = RechartsPrimitive.YAxis;
+export const ChartLine = RechartsPrimitive.Line;
+export const ChartGrid = RechartsPrimitive.CartesianGrid;
+export const ChartXAxis = RechartsPrimitive.XAxis;
+export const ChartYAxis = RechartsPrimitive.YAxis;
 
-export {
-  ChartContainer as Chart,
-  ChartTooltip,
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent,
-  ChartStyle,
-  ChartLine,
-  ChartGrid,
-  ChartXAxis,
-  ChartYAxis,
+export const Chart = {
+  Container: ChartContainer,
+  Tooltip: ChartTooltip,
+  TooltipContent: ChartTooltipContent,
+  Legend: ChartLegend,
+  LegendContent: ChartLegendContent,
+  Style: ChartStyle,
 }

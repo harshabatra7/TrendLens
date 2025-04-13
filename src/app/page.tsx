@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Chart } from "@/components/ui/chart";
+import { Chart, ChartLine, ChartXAxis, ChartYAxis, ChartGrid, } from "@/components/ui/chart";
+import type { ChartTooltipContent } from "@/components/ui/chart";
 import {
   Table,
   TableBody,
@@ -106,8 +107,8 @@ export default function Home() {
           <CardTitle className="text-lg font-semibold">Sales Trends</CardTitle>
         </CardHeader>
         <CardContent>
-          <Chart config={chartConfig}>
-            <Chart.Line
+          <Chart.Container config={chartConfig}>
+            <ChartLine
               dataKey="sales"
               name="Sales"
               stroke="hsl(var(--chart-1))"
@@ -115,11 +116,11 @@ export default function Home() {
               dot={false}
               type="monotone"
             />
-            <Chart.XAxis dataKey="month" />
-            <Chart.YAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
+            <ChartXAxis dataKey="month" />
+            <ChartYAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
             <Chart.TooltipContent />
-            <Chart.Grid strokeDasharray="3 3" />
-          </Chart>
+            <ChartGrid strokeDasharray="3 3" />
+          </Chart.Container>
         </CardContent>
       </Card>
 
