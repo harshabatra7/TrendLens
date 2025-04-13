@@ -9,4 +9,7 @@ export const ai = genkit({
     }),
   ],
   model: 'googleai/gemini-2.0-flash',
+  onException: (e, flow) => {
+    console.error(`Exception in flow ${flow.name}:`, e);
+  },
 });

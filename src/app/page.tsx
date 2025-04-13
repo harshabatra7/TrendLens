@@ -117,7 +117,6 @@ export default function Home() {
             />
             <ChartXAxis dataKey="month" />
             <ChartYAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
-            <Chart.Tooltip />
             <ChartGrid strokeDasharray="3 3" />
           </Chart.Container>
         </CardContent>
