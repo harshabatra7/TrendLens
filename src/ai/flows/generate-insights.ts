@@ -68,6 +68,12 @@ const generateInsightsFlow = ai.defineFlow<
   outputSchema: GenerateInsightsOutputSchema,
 }, async input => {
   try {
+    if (!process.env.GOOGLE_GENAI_API_KEY) {
+      throw new Error(
+        'The GOOGLE_GENAI_API_KEY environment variable is not set. ' +
+        'Please set it to your Google Generative AI API key.'
+      );
+    }
     const {output} = await prompt(input);
     return output!;
   } catch (error: any) {
