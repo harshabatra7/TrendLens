@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartLine, ChartXAxis, ChartYAxis, ChartGrid, Chart } from "@/components/ui/chart";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {ChartLine, ChartXAxis, ChartYAxis, ChartGrid, Chart} from "@/components/ui/chart";
 import {
   Table,
   TableBody,
@@ -13,8 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { generateInsights } from "@/ai/flows/generate-insights";
-import { Skeleton } from "@/components/ui/skeleton";
+import {generateInsights} from "@/ai/flows/generate-insights";
+import {Skeleton} from "@/components/ui/skeleton";
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
 const mockCategoryData = {
   "Electronics": 120000,
@@ -25,18 +26,35 @@ const mockCategoryData = {
 };
 
 const mockSalesData = [
-  { month: "Jan", sales: 50000 },
-  { month: "Feb", sales: 55000 },
-  { month: "Mar", sales: 62000 },
-  { month: "Apr", sales: 70000 },
-  { month: "May", sales: 78000 },
-  { month: "Jun", sales: 85000 },
-  { month: "Jul", sales: 92000 },
-  { month: "Aug", sales: 100000 },
-  { month: "Sep", sales: 108000 },
-  { month: "Oct", sales: 115000 },
-  { month: "Nov", sales: 125000 },
-  { month: "Dec", sales: 135000 },
+  {month: "Jan", sales: 50000},
+  {month: "Feb", sales: 55000},
+  {month: "Mar", sales: 62000},
+  {month: "Apr", sales: 70000},
+  {month: "May", sales: 78000},
+  {month: "Jun", sales: 85000},
+  {month: "Jul", sales: 92000},
+  {month: "Aug", sales: 100000},
+  {month: "Sep", sales: 108000},
+  {month: "Oct", sales: 115000},
+  {month: "Nov", sales: 125000},
+  {month: "Dec", sales: 135000},
+];
+
+// Mock sales data with sale_date
+const mockSalesDataWithDate = [
+  {sale_date: "2024-01-01", sale_amount: 5000},
+  {sale_date: "2024-01-01", sale_amount: 2000}, // Simulate multiple sales on the same date
+  {sale_date: "2024-02-01", sale_amount: 5500},
+  {sale_date: "2024-03-01", sale_amount: 6200},
+  {sale_date: "2024-04-01", sale_amount: 7000},
+  {sale_date: "2024-05-01", sale_amount: 7800},
+  {sale_date: "2024-06-01", sale_amount: 8500},
+  {sale_date: "2024-07-01", sale_amount: 9200},
+  {sale_date: "2024-08-01", sale_amount: 10000},
+  {sale_date: "2024-09-01", sale_amount: 10800},
+  {sale_date: "2024-10-01", sale_amount: 11500},
+  {sale_date: "2024-11-01", sale_amount: 12500},
+  {sale_date: "2024-12-01", sale_amount: 13500},
 ];
 
 const chartConfig = {
@@ -49,6 +67,7 @@ const chartConfig = {
 export default function Home() {
   const [insights, setInsights] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [salesTrendData, setSalesTrendData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,6 +88,19 @@ export default function Home() {
     };
 
     fetchData();
+
+    // Process sales data to group by date and sum sale_amount
+    const processedSalesData = mockSalesDataWithDate.reduce((acc: any, curr: any) => {
+      const existingDateEntry = acc.find((item: any) => item.sale_date === curr.sale_date);
+      if (existingDateEntry) {
+        existingDateEntry.sale_amount += curr.sale_amount;
+      } else {
+        acc.push({sale_date: curr.sale_date, sale_amount: curr.sale_amount});
+      }
+      return acc;
+    }, []);
+
+    setSalesTrendData(processedSalesData);
   }, []);
 
   const totalSales = Object.values(mockCategoryData).reduce((acc, val) => acc + val, 0);
@@ -106,19 +138,16 @@ export default function Home() {
           <CardTitle className="text-lg font-semibold">Sales Trends</CardTitle>
         </CardHeader>
         <CardContent>
-          <Chart.Container config={chartConfig}>
-            <ChartLine
-              dataKey="sales"
-              name="Sales"
-              stroke="hsl(var(--chart-1))"
-              strokeWidth={2}
-              dot={false}
-              type="monotone"
-            />
-            <ChartXAxis dataKey="month" />
-            <ChartYAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
-            <ChartGrid strokeDasharray="3 3" />
-          </Chart.Container>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={salesTrendData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="sale_date" />
+              <YAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="sale_amount" fill="hsl(var(--chart-1))" name="Sales" />
+            </BarChart>
+          </ResponsiveContainer>
         </CardContent>
       </Card>
 
