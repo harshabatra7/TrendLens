@@ -1,1 +1,1 @@
-import '@/ai/flows/generate-insights.ts';
+// Empty file after removing the import

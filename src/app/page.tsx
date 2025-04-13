@@ -12,8 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {generateInsights} from "@/ai/flows/generate-insights";
-import {Skeleton} from "@/components/ui/skeleton";
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
 const mockCategoryData = {
@@ -64,30 +62,9 @@ const chartConfig = {
 };
 
 export default function Home() {
-  const [insights, setInsights] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [salesTrendData, setSalesTrendData] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const generatedInsights = await generateInsights({
-          totalSales: 1000000,
-          averageRating: 4.5,
-          discountRate: 0.10,
-          categorySales: mockCategoryData,
-        });
-        setInsights(generatedInsights?.insights || "No insights generated.");
-      } catch (error) {
-        console.error("Error generating insights:", error);
-        setInsights("Failed to generate insights.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-
     // Process sales data to group by date and sum sale_amount
     const processedSalesData = mockSalesDataWithDate.reduce((acc: any, curr: any) => {
       const existingDateEntry = acc.find((item: any) => item.sale_date === curr.sale_date);
@@ -175,20 +152,7 @@ export default function Home() {
           </Table>
         </CardContent>
       </Card>
-
-      {/* Automated Insights */}
-      <Card className="bg-background shadow-md rounded-lg md:col-span-2 lg:col-span-3">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Automated Insights</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <Skeleton className="h-24" />
-          ) : (
-            <p className="text-sm">{insights}</p>
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }
+
