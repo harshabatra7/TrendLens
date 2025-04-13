@@ -108,25 +108,6 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      {/* Sales Trend Charts */}
-      <Card className="bg-background shadow-md rounded-lg md:col-span-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Sales Trends</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={salesTrendData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="sale_date" />
-              <YAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="sale_amount" fill="hsl(var(--chart-1))" name="Sales" />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
       {/* Category Analysis Table */}
       <Card className="bg-background shadow-md rounded-lg lg:col-span-1">
         <CardHeader>
@@ -152,7 +133,27 @@ export default function Home() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Sales Trend Charts */}
+      <Card className="bg-background shadow-md rounded-lg md:col-span-2">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold">Sales Trends</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={salesTrendData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="sale_date" />
+              <YAxis tickFormatter={(value) => `$${value.toLocaleString()}`} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="sale_amount" fill="hsl(var(--chart-1))" name="Sales" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
     </div>
   );
 }
+
 
