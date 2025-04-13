@@ -1,5 +1,3 @@
-// This file is machine-generated - do not edit!
-
 'use server';
 
 /**
@@ -7,7 +5,7 @@
  *
  * - generateInsights - A function that handles the generation of insights from sales data.
  * - GenerateInsightsInput - The input type for the generateInsights function.
- * - GenerateInsightsOutput - The return type for the generateInsights function.
+ * - GenerateInsightsOutput - The return type for the GenerateInsightsOutput function.
  */
 
 import {ai} from '@/ai/ai-instance';
@@ -69,6 +67,11 @@ const generateInsightsFlow = ai.defineFlow<
   inputSchema: GenerateInsightsInputSchema,
   outputSchema: GenerateInsightsOutputSchema,
 }, async input => {
-  const {output} = await prompt(input);
-  return output!;
+  try {
+    const {output} = await prompt(input);
+    return output!;
+  } catch (error: any) {
+    console.error("Error generating insights:", error);
+    return {insights: "Failed to generate insights. Please check your API key and try again."};
+  }
 });
