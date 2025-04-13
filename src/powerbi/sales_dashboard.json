@@ -1,0 +1,142 @@
+{
+  "version": "1.0",
+  "dataset": {
+    "name": "SalesData",
+    "tables": [
+      {
+        "name": "SalesTrends",
+        "columns": [
+          {
+            "name": "Month",
+            "dataType": "String"
+          },
+          {
+            "name": "Sales",
+            "dataType": "Double"
+          }
+        ],
+        "rows": [
+          {
+            "Month": "Jan",
+            "Sales": 50000
+          },
+          {
+            "Month": "Feb",
+            "Sales": 55000
+          },
+          {
+            "Month": "Mar",
+            "Sales": 62000
+          },
+          {
+            "Month": "Apr",
+            "Sales": 70000
+          },
+          {
+            "Month": "May",
+            "Sales": 78000
+          },
+          {
+            "Month": "Jun",
+            "Sales": 85000
+          },
+          {
+            "Month": "Jul",
+            "Sales": 92000
+          },
+          {
+            "Month": "Aug",
+            "Sales": 100000
+          },
+          {
+            "Month": "Sep",
+            "Sales": 108000
+          },
+          {
+            "Month": "Oct",
+            "Sales": 115000
+          },
+          {
+            "Month": "Nov",
+            "Sales": 125000
+          },
+          {
+            "Month": "Dec",
+            "Sales": 135000
+          }
+        ]
+      },
+      {
+        "name": "CategorySales",
+        "columns": [
+          {
+            "name": "Category",
+            "dataType": "String"
+          },
+          {
+            "name": "Sales",
+            "dataType": "Double"
+          }
+        ],
+        "rows": [
+          {
+            "Category": "Electronics",
+            "Sales": 120000
+          },
+          {
+            "Category": "Clothing",
+            "Sales": 95000
+          },
+          {
+            "Category": "Home Goods",
+            "Sales": 80000
+          },
+          {
+            "Category": "Books",
+            "Sales": 55000
+          },
+          {
+            "Category": "Beauty",
+            "Sales": 40000
+          }
+        ]
+      }
+    ]
+  },
+  "report": {
+    "pages": [
+      {
+        "name": "Sales Overview",
+        "displayName": "Sales Overview",
+        "visuals": [
+          {
+            "type": "lineChart",
+            "title": "Sales Trends",
+            "table": "SalesTrends",
+            "xColumn": "Month",
+            "yColumn": "Sales"
+          },
+          {
+            "type": "barChart",
+            "title": "Category Sales",
+            "table": "CategorySales",
+            "categoryColumn": "Category",
+            "valueColumn": "Sales"
+          },
+          {
+            "type": "card",
+            "title": "Total Sales",
+            "table": "SalesTrends",
+            "measure": "SUM(Sales)"
+          },
+          {
+            "type": "card",
+            "title": "Average Sales",
+            "table": "SalesTrends",
+            "measure": "AVERAGE(Sales)"
+          }
+        ]
+      }
+    ]
+  }
+}
