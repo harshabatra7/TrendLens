@@ -1,4 +1,4 @@
-# 📊 Trendlens - Sales Data Visualizer
+# 📊 TrendLens - Sales Data Visualizer
 
 Trendlens is a modern dashboard application built using **Next.js**, **Firebase**, and **Recharts** to analyze and visualize sales data in real-time. This project helps businesses gain insights from their monthly sales trends, product categories, and regional performance.
 
